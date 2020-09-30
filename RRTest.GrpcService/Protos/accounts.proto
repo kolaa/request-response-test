@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option csharp_namespace = "RRTest.GrpcService";
+
+import "google/protobuf/timestamp.proto";
+
+package accounts;
+
+// The greeting service definition.
+service ClientAccounts {
+  // Sends a greeting
+  rpc GetAccounts (GetAccountsRequest) returns (GetAccountsResponse);
+}
+
+// The request message containing the user's name.
+message GetAccountsRequest {
+  int32 clientId = 1;
+}
+
+message DecimalValue  {
+
+	// Whole units part of the amount
+	int64 units = 1;
+
+	// Nano units of the amount (10^-9)
+	// Must be same sign as units
+	sfixed32 nanos = 2;
+}
+
+// The response message containing the greetings.
+message GetAccountsResponse {
+  message Account {
+    int32 accountId = 1;
+
+    google.protobuf.Timestamp OpenDate = 2;
+
+    string Number = 3;
+
+    string Name = 4;
+    
+    DecimalValue Balance = 5;
+
+    string Description = 6;
+  }  
+  
+  repeated Account accounts = 1;
+}
